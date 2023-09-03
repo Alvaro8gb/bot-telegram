@@ -45,6 +45,7 @@ def report():
 
 if __name__ == '__main__':
 
+
     report()
         
     schedule.every().day.at("19:00").do(report)
