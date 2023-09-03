@@ -2,8 +2,12 @@ import os
 from bs4 import BeautifulSoup  #del módulo bs4, necesitamos BeautifulSoup
 import requests
 import schedule
-
+import logging 
 from dotenv import load_dotenv
+
+
+# Configurar el sistema de registro (logging)
+logging.basicConfig(filename='errores.log', level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 load_dotenv()
 
@@ -27,8 +31,17 @@ def scraping():
     return format_result
 
 def report():
-    price = f'El precio de Felix Fantastic 120 x 85 g - Jumbopack es de {scraping()}'
-    bot_send_text(price)
+
+    try:
+        valor = scraping()
+
+        if valor != None:
+            price = f'El precio de Felix Fantastic 120 x 85 g - Jumbopack es de {valor}'
+            bot_send_text(price)
+        else:
+            bot_send_text("Algo raro pasa, mira logs")
+    except Exception as e:
+        logging.error("Ocurrió una excepción:", exc_info=True)    
 
 if __name__ == '__main__':
 
