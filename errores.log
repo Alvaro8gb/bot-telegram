@@ -1,0 +1,60 @@
+2023-09-07 11:55:54,914 - root - ERROR - Ocurrió una excepción:
+Traceback (most recent call last):
+  File "/home/alvaro/Desktop/my-pps/bot-telegram/main.py", line 53, in report
+    valor = scraping()
+  File "/home/alvaro/Desktop/my-pps/bot-telegram/main.py", line 40, in scraping
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'selector_de_elemento_de_interés')))
+  File "/home/alvaro/Desktop/my-pps/bot-telegram/.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py", line 95, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+#0 0x55bc9236de23 <unknown>
+#1 0x55bc920967a7 <unknown>
+#2 0x55bc920d51d3 <unknown>
+#3 0x55bc920d52c1 <unknown>
+#4 0x55bc92110a04 <unknown>
+#5 0x55bc920f603d <unknown>
+#6 0x55bc9210e369 <unknown>
+#7 0x55bc920f5de3 <unknown>
+#8 0x55bc920c9a7b <unknown>
+#9 0x55bc920ca81e <unknown>
+#10 0x55bc9232f638 <unknown>
+#11 0x55bc92333507 <unknown>
+#12 0x55bc9233dc4c <unknown>
+#13 0x55bc92334136 <unknown>
+#14 0x55bc923029cf <unknown>
+#15 0x55bc92357b98 <unknown>
+#16 0x55bc92357d68 <unknown>
+#17 0x55bc92366cb3 <unknown>
+#18 0x7f943a894b43 <unknown>
+
+2023-09-07 11:56:32,489 - root - ERROR - Ocurrió una excepción:
+Traceback (most recent call last):
+  File "/home/alvaro/Desktop/my-pps/bot-telegram/main.py", line 54, in report
+    valor = scraping()
+  File "/home/alvaro/Desktop/my-pps/bot-telegram/main.py", line 41, in scraping
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'selector_de_elemento_de_interés')))
+  File "/home/alvaro/Desktop/my-pps/bot-telegram/.venv/lib/python3.10/site-packages/selenium/webdriver/support/wait.py", line 95, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+#0 0x55d35c73de23 <unknown>
+#1 0x55d35c4667a7 <unknown>
+#2 0x55d35c4a51d3 <unknown>
+#3 0x55d35c4a52c1 <unknown>
+#4 0x55d35c4e0a04 <unknown>
+#5 0x55d35c4c603d <unknown>
+#6 0x55d35c4de369 <unknown>
+#7 0x55d35c4c5de3 <unknown>
+#8 0x55d35c499a7b <unknown>
+#9 0x55d35c49a81e <unknown>
+#10 0x55d35c6ff638 <unknown>
+#11 0x55d35c703507 <unknown>
+#12 0x55d35c70dc4c <unknown>
+#13 0x55d35c704136 <unknown>
+#14 0x55d35c6d29cf <unknown>
+#15 0x55d35c727b98 <unknown>
+#16 0x55d35c727d68 <unknown>
+#17 0x55d35c736cb3 <unknown>
+#18 0x7f60e3e94b43 <unknown>
+

@@ -1,13 +1,19 @@
 import os
-from bs4 import BeautifulSoup  #del módulo bs4, necesitamos BeautifulSoup
-import requests
+from bs4 import BeautifulSoup  # del módulo bs4, necesitamos BeautifulSoup
 import schedule
-import logging 
+import logging
 from dotenv import load_dotenv
 
+import requests
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
 
 # Configurar el sistema de registro (logging)
-logging.basicConfig(filename='errores.log', level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='errores.log', level=logging.ERROR,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 load_dotenv()
 
@@ -17,18 +23,27 @@ CHAT_ID = os.environ.get("CHAT-ID")
 
 def bot_send_text(bot_message):
 
-    send_text = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + CHAT_ID + '&parse_mode=Markdown&text=' + bot_message
+    send_text = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + \
+        CHAT_ID + '&parse_mode=Markdown&text=' + bot_message
 
     response = requests.get(send_text)
 
     return response.json()
 
+
 def scraping():
-    url = requests.get('https://www.zooplus.es/shop/tienda_gatos/comida_humeda/felix/so_gut_fantastic/620449')
-    soup = BeautifulSoup(url.content, 'html.parser')
+
+    driver = webdriver.Chrome()
+    url = 'https://www.zooplus.es/shop/tienda_gatos/comida_humeda/felix/so_gut_fantastic/620449'
+    driver.get(url)
+
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
     result = soup.find(attrs={'data-zta': 'productStandardPriceAmount'})
     format_result = result.text
+
+    format_result = result.text
     return format_result
+
 
 def report():
 
@@ -41,14 +56,14 @@ def report():
         else:
             bot_send_text("Algo raro pasa, mira logs")
     except Exception as e:
-        logging.error("Ocurrió una excepción:", exc_info=True)    
+        logging.error("Ocurrió una excepción:", exc_info=True)
+
 
 if __name__ == '__main__':
 
-
     report()
-        
-    schedule.every().day.at("19:00").do(report)
+
+    schedule.every().day.at("10:00").do(report)
 
     while True:
         schedule.run_pending()
