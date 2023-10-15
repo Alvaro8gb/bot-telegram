@@ -11,6 +11,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
+import pandas as pd
+
 # Configurar el sistema de registro (logging)
 logging.basicConfig(filename='errores.log', level=logging.ERROR,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -38,12 +40,37 @@ def scraping():
     driver.get(url)
 
     soup = BeautifulSoup(driver.page_source, 'html.parser')
-    result = soup.find(attrs={'data-zta': 'productStandardPriceAmount'})
-    format_result = result.text
+    # Encuentra todos los div con las clases especificadas
+    divs = soup.find_all('div', attrs={"data-zta": "product-variant"})
 
-    format_result = result.text
-    return format_result
+    precios = []
+    descripciones = []
 
+    for div in divs:
+        # Encuentra el span dentro de cada div
+        span = div.find('span', class_='z-price__amount z-price__amount--standard')
+        span_desc = div.find("span", attrs={"data-zta":"variantDescription"})
+        
+        # Comprueba si se encontró un span y extrae su contenido
+        if span:
+            price = span.get_text(strip=True)
+            precios.append(price)
+
+        if span_desc:
+            desc = span_desc.get_text(strip=True).replace("\n", "").replace("  ", "")
+            descripciones.append(desc)
+
+        
+
+    data = {
+        'Precio': precios,
+        'Descripción': descripciones
+    }
+
+    df = pd.DataFrame(data)
+    print(df)
+
+    return df.to_string(index=False)
 
 def report():
 
@@ -59,11 +86,12 @@ def report():
         logging.error("Ocurrió una excepción:", exc_info=True)
 
 
+
 if __name__ == '__main__':
 
     report()
 
-    schedule.every().day.at("10:00").do(report)
-
-    while True:
-        schedule.run_pending()
+    #schedule.every().day.at("10:00").do(report)
+#
+    #while True:
+    #    schedule.run_pending()
